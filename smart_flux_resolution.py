@@ -38,8 +38,6 @@ class SmartFluxResolution:
                     "32:9 (Extreme Ultrawide)"
                 ], {"default": "1:1 (Perfect Square)"}),
                 "divisible_by": ("INT", {"default": 8, "min": 1, "max": 64, "step": 1}),
-                "custom_ratio": ("BOOLEAN", {"default": False}),
-                "custom_aspect_ratio": ("STRING", {"default": "16:9"}),
                 "max_long_side": ("INT", {"default": 2112, "min": 512, "max": 8192, "step": 16}),
                 "smart_cap_enable": ("BOOLEAN", {"default": True}),
             }
@@ -50,22 +48,16 @@ class SmartFluxResolution:
     FUNCTION = "calculate"
     CATEGORY = "Bigornh2o/Resolution"
 
-    def calculate(self, megapixel, aspect_ratio, divisible_by, custom_ratio, custom_aspect_ratio, max_long_side, smart_cap_enable):
+    def calculate(self, megapixel, aspect_ratio, divisible_by, max_long_side, smart_cap_enable):
         megapixel_float = float(megapixel)
         # 1. Parse ratio
         try:
-            if custom_ratio:
-                ratio_str = custom_aspect_ratio.strip()
-                w_str, h_str = ratio_str.split(':')
-                w_ratio = float(w_str)
-                h_ratio = float(h_str)
-            else:
-                ratio_str = aspect_ratio.split(' ')[0]
-                w_str, h_str = ratio_str.split(':')
-                w_ratio = float(w_str)
-                h_ratio = float(h_str)
+            ratio_str = aspect_ratio.split(' ')[0]
+            w_str, h_str = ratio_str.split(':')
+            w_ratio = float(w_str)
+            h_ratio = float(h_str)
         except Exception as e:
-            raise ValueError(f"Invalid aspect ratio format. Expected 'W:H' (e.g. '16:9'). Received: '{custom_aspect_ratio if custom_ratio else aspect_ratio}'")
+            raise ValueError(f"Invalid aspect ratio format. Expected 'W:H' (e.g. '16:9'). Received: '{aspect_ratio}'")
 
         if w_ratio <= 0 or h_ratio <= 0:
             raise ValueError("Aspect ratio components must be strictly positive.")

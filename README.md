@@ -9,7 +9,6 @@ This is extremely useful when dealing with very long or ultrawide aspect ratios 
 - **Standard Megapixel Sizing:** Select an aspect ratio and target megapixel. The node handles the exact resolution math while correctly orienting landscape vs portrait.
 - **Smart Long Side Clamp:** If the calculated mathematical resolution has a long side exceeding `max_long_side` (e.g. > 2100 px), the node automatically scales the effective megapixels down so that the final image touches but does not exceed the safe long side, keeping the exact aspect ratio intact.
 - **Divisible by enforcement:** Results are smoothly floored to the nearest multiple of `divisible_by` (default 8) to satisfy models / VAEs.
-- **Custom Ratios:** Supports inputting custom ratio strings like `21:9` or `11:4`.
 - **Extensive UI Feedback:** Provides text previews of what changed, including raw mathematical target resolution vs clamped resolution, clamped status, and final effective megapixels.
 
 ## Installation
@@ -42,8 +41,6 @@ Then the node takes:
 - **megapixel**: Target value from 0.1 to 3.5 (selectable via dropdown).
 - **aspect_ratio**: Comprehensive dropdown of standard ratios with semantic names.
 - **divisible_by**: Int. Ensure sides divide neatly. Defaults to 8.
-- **custom_ratio**: Bool. Enable to ignore the dropdown.
-- **custom_aspect_ratio**: String (e.g. "16:9").
 - **max_long_side**: The "safe" long side limit. Defaults to 2112.
 - **smart_cap_enable**: Toggle the clamping behavior.
 
